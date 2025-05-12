@@ -1,50 +1,76 @@
-# Batch Connect app configuration file
-#
-# @note Used to define the submitted cluster, title, description, and
-#   hard-coded/user-defined attributes that make up this Batch Connect app.
 ---
-
-# **MUST** set cluster id here that matches cluster configuration file located
-# under /etc/ood/config/clusters.d/*.yml
-# @example Use the Owens cluster at Ohio Supercomputer Center
-#     cluster: "owens"
-cluster: ""
-
-# Define attribute values that aren't meant to be modified by the user within
-# the Dashboard form
+cluster: "slurm"
 attributes:
-  # Set the corresponding modules that need to be loaded for Jupyter to run
-  #
-  # @note It is called within the batch job as `module load <modules>` if
-  #   defined
-  # @example Do not load any modules
-  #     modules: ""
-  # @example Using default python module
-  #     modules: "python"
-  # @example Using specific python module
-  #     modules: "python/3.5"
-  # @example Using combination of modules
-  #     modules: "python/3.5 cuda/8.0.44"
-  modules: "python"
+  node_type: null
+  custom_env:
+    widget: "text_field"
+    help: |
+      Complete path to a bash script which will load your environment needed to allow the command "jupyter" to run. Otherwise runs basic shared.
+  bc_num_hours:
+    value: 4
+  num_cores:
+    widget: "number_field"
+    value: 1
+    help: |
+      Number of cpus per task
+    min: 0
+    max: 550
+    step: 1
+  num_tasks:
+    widget: "number_field"
+    value: 1
+    help: |
+      Number of tasks per node
+    min: 1
+    max: 128
+    step: 1
+  num_nodes:
+    widget: "number_field"
+    value: 1
+    help: |
+      Number of nodes to request
+    min: 1
+    max: 12
+    step: 1
+  num_RAM:
+    widget: "number_field"
+    label: "GB of RAM per core"
+    value: 4
+    help: |
+      Ram per cpu requested.
+    min: 1
+    max: 5000
+    step: 1
+  cuda_version:
+    widget: "select"
+    label: "CUDA Version"
+    help: "This defines the version of CUDA to load if you are binding a GPU"
+    options:
+      - ["v12.4.0", "CUDA/12.4.0" ]
+      - ["v11.7.0", "CUDA/11.7.0" ]
+      - ["v11.3.1", "CUDA/11.3.1" ]
+  gpus_per_node:
+    widget: "select"
+    label: "GPUs per NODE"
+    help: "Number of GPU cards to bind per node requested."
+    options:
+      - ["0", "0"]
+      - ["1", "1"]
+      - ["2", "2"]
 
-  # Any extra command line arguments to feed to the `jupyter notebook ...`
-  # command that launches the Jupyter notebook within the batch job
   extra_jupyter_args: ""
-
-# All of the attributes that make up the Dashboard form (in respective order),
-# and made available to the submit configuration file and the template ERB
-# files
-#
-# @note You typically do not need to modify this unless you want to add a new
-#   configurable value
-# @note If an attribute listed below is hard-coded above in the `attributes`
-#   option, then it will not appear in the form page that the user sees in the
-#   Dashboard
 form:
   - modules
   - extra_jupyter_args
   - bc_account
-  - bc_queue
   - bc_num_hours
   - bc_num_slots
+  - num_cores
+  - num_tasks
+  - num_nodes
+  - num_RAM
+  - node_type
+  - bc_queue
+  - cuda_version
+  - gpus_per_node
   - bc_email_on_started
