@@ -57,12 +57,8 @@ attributes:
       - ["0", "0"]
       - ["1", "1"]
       - ["2", "2"]
-
-  extra_jupyter_args: ""
 form:
-  - modules
-  - extra_jupyter_args
-  - bc_account
+  - custom_env
   - bc_num_hours
   - bc_num_slots
   - num_cores
