@@ -11,6 +11,7 @@ attributes:
   num_cores:
     widget: "number_field"
     value: 1
+    label: "Number of logical CPUs"
     help: |
       Number of cpus per task
     min: 0
@@ -19,13 +20,15 @@ attributes:
   num_tasks:
     widget: "number_field"
     value: 1
+    label: "Number of Tasks"
     help: |
-      Number of tasks per node
+      Number of tasks per NODE
     min: 1
     max: 128
     step: 1
   num_nodes:
     widget: "number_field"
+    label: Number of Nodes
     value: 1
     help: |
       Number of nodes to request
@@ -64,7 +67,6 @@ attributes:
 form:
   - custom_env
   - bc_num_hours
-  - bc_num_slots
   - num_cores
   - num_tasks
   - num_nodes
