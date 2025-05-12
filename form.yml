@@ -60,7 +60,7 @@ attributes:
   extra_jupyter_args:
     widget: "text_field"
     help: |
-      "Additional arguments fed to the command 'jupyter notebook'.
+      "Additional arguments fed to the command 'jupyter notebook'."
 form:
   - custom_env
   - bc_num_hours
@@ -73,5 +73,5 @@ form:
   - bc_queue
   - cuda_version
   - gpus_per_node
-  - bc_email_on_started
   - extra_jupyter_args
+  - bc_email_on_started

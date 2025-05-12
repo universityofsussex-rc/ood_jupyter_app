@@ -6,7 +6,7 @@ script:
   native:
   - "--mem-per-cpu"
   - "<%= num_RAM.blank? ? 4 : num_RAM.to_i %>G"
-  - "ntasks-per-node"
+  - "--ntasks-per-node"
   - "<%= num_tasks.blank? ? 1 : num_tasks.to_i %>"
   - "--nodes"
   - "<%= num_nodes.blank? ? 1 : num_nodes.to_i %>"
