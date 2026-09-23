@@ -12,12 +12,14 @@ export MODULEPATH=/etc/scl/modulefiles:/opt/ohpc/pub/modulefiles:/mnt/shared/eas
 #
 
 # Load custom env file
-<%- if context.custom_env -%>
+<%- if context.custom_env != "" -%>
 echo "Running Custom User Env Script"
 echo "<%= context.custom_env -%>"
 source <%= context.custom_env -%>
 
 <%- else -%>
+echo " No Custom User Env Script Specified"
+echo "PATH=/opt/jupyter-py39/bin:$PATH"
 export PATH=/opt/jupyter-py39/bin:$PATH
 <%- end -%>
 
