@@ -55,4 +55,21 @@ c.NotebookApp.allow_origin = '*'
 c.NotebookApp.notebook_dir = '${HOME}'
 c.NotebookApp.disable_check_xsrf = True
 EOL
+
+cat >> "${CONFIG_FILE}" << 'EOL'
+# GHSA-fcw5-x6j4-ccmp workaround
+try:
+    import jupyter_server.nbconvert.handlers as _nb
+    def _wrap(cls):
+        orig = cls.content_security_policy  # capture the original property
+        cls.content_security_policy = property(
+            lambda self: orig.fget(self) + "; sandbox allow-scripts"
+        )
+
+    _wrap(_nb.NbconvertFileHandler)
+    _wrap(_nb.NbconvertPostHandler)
+    print("!!! JUPYTER SECURITY PATCH: GHSA-fcw5-x6j4-ccmp workaround loaded !!!", flush=True)
+except Exception as e:
+    print(f"!!! JUPYTER SECURITY PATCH FAILED: {e!r} !!!", flush=True)
+EOL
 )
